@@ -1,0 +1,4 @@
+Build your message.mc file
+Open the dos window and cd to the directory where your message file is
+At the command line type build.bat [messagefile] [outputfile] (do not include any file extensions, the batch file will do this)
+Close the dos window

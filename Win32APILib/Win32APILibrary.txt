@@ -1,0 +1,145 @@
+Win32 API Library:
+==================
+
+Project Complexity		Advanced
+----------------------------------------
+
+Introduction:
+=============
+
+This library is a set of some of the most common API calls, wrapped into objects for use with just about any project. Included with the project is a MsgDLL batch file and message file for the EventLog object. The project was started as i needed some of these routines for other project that i was developing, and so this extension DLL was born.
+
+This project was written in Visual Basic 6.0 and has not been tested on any earlier version of Visual Basic or on VB.Net, it should be compatible with most operating systems although it has not been tested on Windows ME or XP.
+
+
+Library Contents:
+=================
+
+EventLog
+INetConnect
+Miscellaneous
+Network
+Progress
+Registry
+System
+Tray
+
+EventLog
+========
+
+An object of routines for writing errors to the system event log, includes a batch file(MsgDLL folder) for creating the message dll.
+
+Dim evt As New EventLog
+' Initialize the EventLog object
+with evt
+  .AppName = App.ExeName
+  .MessageDLL = "[filepath of your message DLL]"
+  .UseLog = evtApplication Or evtSecurity Or evtSystem (choose one of these)
+  .Connect
+End With
+
+' In your error handler, call WriteToLog to log an error in the event log
+' MessageID is a message id from your message DLL
+evt.WriteToLog [MessageID from MessageDLL], LogTypeEnum, LogCategoryEnum, 0&, 0&
+
+INetConnect
+===========
+
+INetConnect is an object for checking the connection state to the internet and by what means a computer is connected.
+
+IsConnected(...) will return True if the computer is connected to the internet
+GetConnectedString(...) will return a string stating the current connection type and state to the internet.
+
+Miscellaneous
+=============
+
+This object is a global object containing some global routines
+
+nl(...) will return a VbCrLf for each n passed in (newline)
+TrimNull(...) return the string passed in and trims it to the first Null character
+BrowseForFolder(...) Displays the BrowseForFolder dialog box and returns the name and path of the folder selected or Null if the dialog was canceled
+Center(...) will center frm to the parent, if parent is nothing then it will center to the desktop
+ErrorHandler(...) formats and error into a presentable error message and displays it to the user, includes the option to pass a line number
+GetWndPlacement(...) gets the details of the form referenced by the hWnd handle and returns a UDT containing all the information for the placement of that window
+SetWndPlacement(...) sets the window placement information for the window referenced to by hWnd handle from the UDT passed in
+TopMost(...) makes a window the absolute topmost window
+MakeNormal(...) used in conjunction with TopMost, resets a window from being the TopMost window to its normal state
+Mod7(...) a modulus calculator routine, calculates the modulus check digi of any value passed in, can also change the check value (default is 7)
+ZeroMemory(...) Fills a block of memory with zeros
+
+Network
+=======
+
+Some network routines, mapping and disconnecting network drives. etc.
+
+MapNetworkDrive(...) pass in the LocalName(i.e. "P:") and the RemoteName (i.e. "\\server\share"), the function will return 0 if successful, if username and password are Null and logon information is required then the user will be prompted to enter the login details.
+DisconnectNetworkDrive(...) Disconnects a named local drive
+GetNetConnect(...) Return the server path of a name local drive
+NetConnectDialog/NetDisconnectDialog opens the relevant dialog for the user
+
+Progress
+========
+
+A small object to calculate the percentage done in a progress dialog, also update the progress control and displays the percentage done message, pass in a progress control and/or label.
+
+SetRange(...) set the lower bound and upper bound range of the progress control, optionally set the step value
+StepIt(...) StepIt calculates the percentage done, updates the message label (if any) and steps the progress controls value by the value of step (optionally set in SetRange, default is 1)
+
+Registry
+========
+
+Contains a large number of the most common registry routine, simply set the hKey, KeyRoot and SubKey properties and call the functions as required.
+
+For Registry:
+	CreateKey
+	DeleteKey
+	DeleteValue
+	EnumRegistryKeys
+	EnumRegistryValues
+	GetRegistryValue
+	KeyExists
+	ReadRemoteRegistryValue
+	SetRegistryValue
+	WriteRemoteRegistryValue
+
+For INI Files:
+	GetIniSetting
+	SetIniSetting
+
+System
+======
+
+Some system function, API calls to retrieve the SystemFolder, WindowsFolder and a routine to find other folder paths such as the Program Files folder or the Common Files folder
+
+Tray
+====
+
+System tray object, add your application to the system tray, requires subclassing for the tray icons menu
+
+Version History:
+================
+
+1.0.0
+=====
+Library released
+
+
+1.0.1
+=====
+Fixed bug in ZeroMemory routine. (discovered by Robert Kersey (PSC))
+Added Network object - mapping and disconnecting network drives
+
+
+Legal Mumbo-Jumbo:
+==================
+This project and its contents have been scanned for viruses and package as such.  
+HOWEVER, It is always best to rescan anything downloaded before using it. I hold no liability as to the user, misuse or abuse of any information released to the public as to its fitness to
+a specific use, or losses obtained by its use...  
+Long story short - the project works and causes no harm to a computer, however it is still released "AS IS."  
+This project may contain components which are freely distributable through third parties.  Any such component is Copyright by its creator.
+
+Technical Support:
+==================
+This project is released to the public through Planet Source Code and has no warranties implied or expressed.
+To report software bug-related comments, suggestions or other project related items, please feel free to
+contact the author through means in which this project is distributed.
